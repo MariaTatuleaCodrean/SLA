@@ -2,8 +2,7 @@
 
 MATLAB code for agent-based simulations and figure generation accompanying the preprint:
 
-> **Swimming-limited aggregation of bacteria in liquid crystals**
-> [INSERT URL]
+> Sintès, G., Goral, M., López-León, T., Lindner, A., & Tătulea-Codrean, M. (2026). Swimming-limited aggregation of bacteria in liquid crystals. *arXiv* preprint arXiv:2607.05239. https://doi.org/10.48550/arXiv.2607.05239
 
 ## Requirements
 
@@ -48,4 +47,4 @@ Run the scripts in `Figures` to reproduce the subfigures from the preprint.
 
 If you use this code, please cite our preprint:
 
-> Swimming-limited aggregation of bacteria in liquid crystals. [INSERT URL]
+> Sintès, G., Goral, M., López-León, T., Lindner, A., & Tătulea-Codrean, M. (2026). Swimming-limited aggregation of bacteria in liquid crystals. *arXiv* preprint arXiv:2607.05239. https://doi.org/10.48550/arXiv.2607.05239
