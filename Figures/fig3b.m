@@ -79,11 +79,6 @@ for kk = size(Y,1):-1:1
     fill([X fliplr(X)], [Y(kk,:) fliplr(Y0)], mycols(kk,:), 'EdgeColor', edgcol, 'LineWidth', 0.25);
 end
 
-% Plot tstar, Nstar point
-temp = Y(end,:);
-I = find(temp<0.45*n0,1);
-plot(X(I),temp(I),'ko','MarkerSize',4,'MarkerFaceColor','k')
-
 xlim([0 max(tplot/t)]);
 ylim([0 1e4]);
 box on

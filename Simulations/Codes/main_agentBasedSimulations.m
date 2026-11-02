@@ -7,27 +7,12 @@ n0   = 1e4;         % number of bacteria
 dx0  = 1e3;         % regular spacing between bacteria (1mm)
 X0 = (1:1:n0)*dx0;  % initial positions of bacteria (regular spacing)
 
-% User input
-choice = 'fig1e_parameters';
-
-% Generate initial speed distribution
-switch true
-    case strcmp(choice,'fig1e_parameters')
-        load('../Data/modelfit_30March2026.mat','muV','sigV')
-        vel_pdf = generateDistribution(muV,sigV);
-
-    case strcmp(choice,'fig3bc_parameters')
-        muV = 9; sigV = 6;
-        vel_pdf = generateDistribution(muV,sigV);
-end
+% Generate initial speed distribution - FIG. 3 parameters
+muV = 9; sigV = 6;
+vel_pdf = generateDistribution(muV,sigV);
 
 % Stop simulations when we reach a given active fraction
-switch true
-    case strcmp(choice,'fig1e_parameters')
-        alpha_target = 0.45;
-    case strcmp(choice,'fig3bc_parameters')
-        alpha_target = 0.25; 
-end
+alpha_target = 0.25; 
 
 % Compute number of merging events
 Nevent = round((1-alpha_target)*n0);

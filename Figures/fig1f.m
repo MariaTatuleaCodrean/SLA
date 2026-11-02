@@ -7,8 +7,8 @@ clear; warning('off','MATLAB:handle_graphics:exceptions:SceneNode')
 load('../Experiments/Codes/Output/chain_data.mat','expvel','explen')
 
 % Load simulation results
-outputfile = '../Simulations/Data/output_ABS_n_10000_Nsim_50_muV_9pt181_sigV_7pt255.mat'; 
-load(outputfile,'sim_vel','sim_len','Nsim','vel_pdf')
+outputfile = '../Simulations/Data/output_pooled_n_20_Nsim_1000_muV_9pt181_sigV_10pt323.mat'; 
+load(outputfile,'len_all','vel_all','Nsim','vel_pdf')
 
 % Only plot selected n values
 selection = [1 3 5];
@@ -32,9 +32,7 @@ edgcol = [1 1 1]*0.2;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % PLOT - Stacked Histogram Plots
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% figure('Position', [750,291,313,385]); % 3 rows & 1 column (taller)
-figure('Position', [750,324,313,352]); % 3 rows & 1 column %329
-% figure('Position', [416,137,678,557]); % 4 rows & 2 columns
+figure('Position', [750,324,313,332]); % 3 rows & 1 column %329
 
 % Loop through subplots
 for kk = 1:length(selection)
@@ -44,38 +42,21 @@ for kk = 1:length(selection)
     subplot(3,1,kk)
     hold on
 
-    % Histogram plot
+    % Histogram plot - experimental data
     histogram(expvel(explen == m),'Normalization','pdf','BinWidth',1, ...
         'FaceColor',mycols(kk,:),'EdgeColor',edgcol);
+ 
+    % Fit velocity distribution from simulations
+    all_vel = vel_all(len_all==m);
+    sim_pdf = fitdist(all_vel(:), 'Kernel', 'Support', 'positive');   % fit kernel density to x
 
-    % % Add line for mean
-    % plot([mean(expvel(explen == m)) mean(expvel(explen == m))], [0 0.15],'k','Color',mycols2(kk,:),...
-    %     'LineWidth',1.5,'HandleVisibility','off') 
-    
-    for jj=1:Nsim
-        % Extract current simulation data
-        vel = sim_vel{jj};
-        len = sim_len{jj};
-        all_vel = vel(round(len)==m);
-
-        if ~isempty(all_vel)
-            % Fit velocity distribution from simulations
-            sim_pdf = fitdist(all_vel(:), 'Kernel', 'Support', 'positive');   % fit kernel density to x
-
-            % Plot
-            x_values = linspace(0,40);
-            y_values = pdf(sim_pdf,x_values);
-
-            plot(x_values,y_values,'Color',[mycols2(kk,:) 0.1],'LineWidth',1,'HandleVisibility','off')
-        end
-    end
-
-    % Draw hidden line for legend
-    plot(-x_values,y_values,'Color',[mycols2(kk,:) 1],'LineWidth',1.5,'HandleVisibility','on')
-
+    % Plot
+    x_values = linspace(0,40);
+    y_values = pdf(sim_pdf,x_values);
+    plot(x_values,y_values,'Color',[mycols2(kk,:) 1],'LineWidth',1.5,'HandleVisibility','on')
 
     % Tidy up
-    xlim([0 35]);
+    xlim([0 40]);
     % ylim([0 0.3])
     yticks(0:0.1:0.3)
     yticklabels({'0','0.1','0.2','0.3'})  
@@ -90,9 +71,9 @@ for kk = 1:length(selection)
         y_values = pdf(vel_pdf,x_values);
         plot(x_values,y_values,'k-','LineWidth',1.5,'HandleVisibility','on')
 
-        legend('\textsf{experiments}','\textsf{theory} ($t=t_*$)','\textsf{theory} ($t=0$)','Interpreter','Latex')
+        legend('\textsf{experiments}','\textsf{theory (pooled)}','\textsf{theory} ($t=0$)','Interpreter','Latex')
     else
-        legend('\textsf{experiments}','\textsf{theory} ($t=t_*$)','Interpreter','Latex')
+        legend('\textsf{experiments}','\textsf{theory (pooled)}','Interpreter','Latex')
     end
 
     lgd = legend;      % get current legend handle

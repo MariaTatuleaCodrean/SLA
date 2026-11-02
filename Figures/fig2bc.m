@@ -13,7 +13,7 @@ legend_labels = compose('%.1f', sigV_vec/muV);
 % Assign control variables
 Vc = muV*[.5, 1, 2];  % central bacterium velocity (for CDF plots)
 rangeT = dx0/muV*linspace(0,10,2000); % range of times (for CDF plots)
-rangeVc = muV*linspace(0.01,5,100);  % range of Vc (for median Te plots)
+rangeVc = muV*linspace(0.01,10,100);  % range of Vc (for median Te plots)
 
 % Define output variables
 all_cdfTe    = nan(length(Vc), length(rangeT),  length(sigV_vec));
@@ -69,13 +69,13 @@ linestyle = {'-','--','-.',':'};
 % PLOT - Fig. 2b
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 figure('Units','centimeters','Position', [15,10,8.5,4]);
-hold on
 
 numcols = length(sigV_vec);
 mycols = colorgradient(numcols,(col4*0.6 + 0.4*col1),(col2*0.9 + 0.1*col1));
 
 for kk=1:length(sigV_vec)
-    plot(rangeVc/muV,all_finiteTe(:,:,kk),linestyle{kk},'Color',mycols(kk,:),'LineWidth',1.75)
+    semilogx(rangeVc/muV,all_finiteTe(:,:,kk),linestyle{kk},'Color',mycols(kk,:),'LineWidth',1.75)
+    hold on
 end
 
 box on
@@ -92,7 +92,7 @@ ax = gca;
 ax.FontSize = 9;
 
 leg=legend(legend_labels,...
-    'Location','southeast');
+    'Location','northwest');
 title(leg,'$\sigma_{V}/\overline{V}$','Interpreter','Latex')
 
 print(gcf, 'Output/fig2b.svg', '-dsvg');

@@ -4,7 +4,7 @@
 clear; addpath('functions') % load user defined functions
 
 % Load experimental results
-load('chain_data.mat','nvec','avg_v','sem_v','muV')
+load('../../Experiments/Codes/Output/chain_data.mat','nvec','avg_v','sem_v','muV')
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % FITTING - Theoretical Model to Exp
